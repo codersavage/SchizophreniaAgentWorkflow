@@ -2,13 +2,19 @@ import pandas as pd
 import os
 from textwrap import dedent
 from dotenv import load_dotenv
-from PubMedTools import search_pubmed, get_pubmed_abstract, get_related_articles, find_by_author
 from CorpusTools import search_corpus, get_paper, get_all_papers
 load_dotenv()
 # Main expression agent can:
 # 1. search literature 
 # 2. read combined schizophrenia sc rna data for diff expression
 # 3. tissue expression tool to evaluate expression in other vital tissues, a measure of toxicity
+class MainExpOutput(BaseModel):
+    uniprot_id: str = Field(..., description="UniProt ID of the target protein")
+    biological_mechanism: str = Field(..., description="Description of the biological mechanism")
+    citations: List[str] = Field(..., description="List of citation strings")
+    DEG_cell: str = Field(..., description="DEG cell information")
+    other_vital_tissues: str = Field(..., description="Other vital tissues that the target is expressed in")
+
 MainExpressionAgent: Agent = Agent(
             name="MainExpressionAgent",
             model=OpenAIChat("gpt-4.1"),
@@ -45,8 +51,7 @@ MainExpressionAgent: Agent = Agent(
                 - Target ID (UniProt ID)
                 - Target Mechanism of Action (from literature)
                 - Target Citations (PubMed IDs or full titles)
-                - Target DEG Cell (cell type)
-                - Target Module Number (biological module)
+                - Target DEG Cell (cell type and differential expression information)
                 - Target In Silico Passed (whether the target passed in silico validation)
 
             7. **Policy & Reasoning 🧠**  
@@ -56,7 +61,7 @@ MainExpressionAgent: Agent = Agent(
             - You are the primary selector of AD therapy candidates — be **rigorous and discerning**.
             - DO NOT ask the user any questions — use your own judgment and available tools.
             """),
-            response_model=TargetOutput,
+            response_model=MainExpOutput,
             structured_outputs=True,
             show_tool_calls=True
         )
