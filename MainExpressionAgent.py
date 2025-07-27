@@ -29,15 +29,11 @@ MainExpressionAgent: Agent = Agent(
             - Only retain genes that appear in the **top DEGs** (positive estimate values) in at least one relevant cell type.  
             - This is a **hard constraint** — any gene that does not meet this requirement must be excluded.
 
-            3. **Module and Cell-Type Annotation 🧠**  
-            - Use `get_module_number_and_cell_type` to extract the **biological module** and **relevant cell type**.
-            - Prioritize genes with cell-type-specific roles and clearly assigned module numbers.
-
-            4. **Tissue Toxicity Filter ⚠️**  
+            5. **Tissue Toxicity Filter ⚠️**  
             - Use `tissue_expression_tool` to screen for **off-target expression**.
             - Disqualify genes that are **highly expressed** in critical non-brain tissues (e.g. heart, liver, kidney).
 
-            5. **Target Selection 🎯**  
+            6. **Target Selection 🎯**  
             - From your filtered candidates, choose **2 to 6 high-quality gene targets** that:
                 - Are literature-supported
                 - Are differentially expressed in AD-relevant cells

@@ -1,3 +1,7 @@
+# Target selection agent can: 
+# 1. Search all of literature 
+# 2. Check if gene is in GWAS study (preferred, but not required)
+
 class TargetOutput(BaseModel):
     uniprot_id: str = Field(..., description="UniProt ID of the target protein")
     biological_mechanism: str = Field(..., description="Description of the biological mechanism")
