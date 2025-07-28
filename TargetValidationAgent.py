@@ -14,15 +14,15 @@ load_dotenv()
 # 1. Search all of literature to confirm target relevance, and to ensure not antipsychotic response-caused DEG 
 # 2. Check if gene is in GWAS study (preferred, but not required)
 # perhaps give access to CommonMind consortium data? 
-class TargetOutput(BaseModel):
+class TargetValidation_Output(BaseModel):
     uniprot_id: str = Field(..., description="UniProt ID of the target protein")
     biological_mechanism: str = Field(..., description="Description of the biological mechanism")
     citations: List[str] = Field(..., description="List of citation strings")
     DEG_cell: str = Field(..., description="DEG cell information")
     GWAS_info: str = Field(..., description="GWAS information")
+    antipsychotic_response_caused_DEG: str = Field(..., description="Whether the target is a DEG caused by antipsychotic response and your reasoning why")
     in_silico_passed: bool = Field(..., description="Whether the target passed in silico validation")
     session_ids: List[str] = Field(..., description="List of session IDs associated with this target")
-
 
 TargetValidationAgent: Agent = Agent(
             name="TargetValidationAgent",

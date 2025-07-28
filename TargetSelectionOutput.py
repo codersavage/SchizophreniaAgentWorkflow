@@ -8,14 +8,14 @@ load_dotenv()
 # 1. search literature 
 # 2. read combined schizophrenia sc rna data for diff expression
 # 3. tissue expression tool to evaluate expression in other vital tissues, a measure of toxicity
-class MainExpOutput(BaseModel):
+class TargetSelection_Output(BaseModel):
     uniprot_id: str = Field(..., description="UniProt ID of the target protein")
     biological_mechanism: str = Field(..., description="Description of the biological mechanism")
     citations: List[str] = Field(..., description="List of citation strings")
     DEG_cell: str = Field(..., description="DEG cell information")
     other_vital_tissues: str = Field(..., description="Other vital tissues that the target is expressed in")
 
-MainExpressionAgent: Agent = Agent(
+TargetSelectionAgent: Agent = Agent(
             name="MainExpressionAgent",
             model=OpenAIChat("gpt-4.1"),
             tools=[],
